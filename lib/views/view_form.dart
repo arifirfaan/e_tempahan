@@ -16,6 +16,9 @@ class _ViewFormState extends State<ViewForm> {
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerPhone = TextEditingController();
 
+  final TextEditingController _controllerNoKP = TextEditingController();
+  final TextEditingController _controllerAlamat = TextEditingController();
+
   String labelName = "";
   int labelPhone = 0;
   List<PermohonanModel> listpermohonan = [];
@@ -44,6 +47,12 @@ class _ViewFormState extends State<ViewForm> {
             });
       } else {
         labelPhone = int.parse(_controllerPhone.text);
+        listpermohonan.add(PermohonanModel(
+            nama: _controllerName.text, 
+            noKP: int.parse(_controllerNoKP.text), 
+            alamat: _controllerAlamat.text, 
+            noPhone: int.parse(_controllerPhone.text))
+        );
       }
 
       _controllerName.clear();
@@ -83,6 +92,14 @@ class _ViewFormState extends State<ViewForm> {
                   TextField(
                     decoration: InputDecoration(hintText: "Enter Phone"),
                     controller: _controllerPhone,
+                  ),
+                  TextField(
+                    decoration: InputDecoration(hintText: "Enter No KP"),
+                    controller: _controllerNoKP,
+                  ),
+                  TextField(
+                    decoration: InputDecoration(hintText: "Enter Alamat"),
+                    controller: _controllerAlamat,
                   )
                 ],
               ),
@@ -92,10 +109,18 @@ class _ViewFormState extends State<ViewForm> {
               child: ElevatedButton(
                   onPressed: onSubmit, child: Text("Hantar/Submit")),
             ),
-            Padding(
+            Container(
               padding: EdgeInsets.all(20),
-              child: ListView.builder(itemBuilder: (context, int index) {
-                return Text("");
+              width: 400,
+              height: 200,
+              child: ListView.builder(
+                itemCount: listpermohonan.length,
+                itemBuilder: (context, int index) {
+                return Text(
+                  listpermohonan[index].toString() + 
+                  listpermohonan[index].nama +
+                  listpermohonan[index].alamat
+                );
               }),
             )
           ],
