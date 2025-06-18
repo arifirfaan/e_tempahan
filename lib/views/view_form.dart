@@ -56,6 +56,8 @@ class _ViewFormState extends State<ViewForm> {
 
       _controllerName.clear();
       _controllerPhone.clear();
+      _controllerAlamat.clear();
+      _controllerNoKP.clear();
     });
   }
 
@@ -63,6 +65,8 @@ class _ViewFormState extends State<ViewForm> {
   void dispose() {
     _controllerName.dispose();
     _controllerPhone.dispose();
+    _controllerAlamat.dispose();
+    _controllerNoKP.dispose();
     super.dispose();
   }
 
