@@ -2,6 +2,7 @@
 // 2. add widget TextField
 // 3. add void dispose
 
+import 'package:e_tempahan/model/permohonan_model.dart';
 import 'package:flutter/material.dart';
 
 class ViewForm extends StatefulWidget {
@@ -17,6 +18,7 @@ class _ViewFormState extends State<ViewForm> {
 
   String labelName = "";
   int labelPhone = 0;
+  List<PermohonanModel> listpermohonan = [];
 
   /// Fungsi untuk gantikan nama dari nilai TextField
   void onSubmit() {
@@ -36,8 +38,7 @@ class _ViewFormState extends State<ViewForm> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text("Continue")
-                  )
+                      child: Text("Continue"))
                 ],
               );
             });
@@ -90,6 +91,12 @@ class _ViewFormState extends State<ViewForm> {
               padding: EdgeInsets.all(15),
               child: ElevatedButton(
                   onPressed: onSubmit, child: Text("Hantar/Submit")),
+            ),
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: ListView.builder(itemBuilder: (context, int index) {
+                return Text("");
+              }),
             )
           ],
         ),
