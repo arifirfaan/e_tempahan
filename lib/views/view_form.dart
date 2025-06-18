@@ -48,11 +48,10 @@ class _ViewFormState extends State<ViewForm> {
       } else {
         labelPhone = int.parse(_controllerPhone.text);
         listpermohonan.add(PermohonanModel(
-            nama: _controllerName.text, 
-            noKP: int.parse(_controllerNoKP.text), 
-            alamat: _controllerAlamat.text, 
-            noPhone: int.parse(_controllerPhone.text))
-        );
+            nama: _controllerName.text,
+            noKP: int.parse(_controllerNoKP.text),
+            alamat: _controllerAlamat.text,
+            noPhone: int.parse(_controllerPhone.text)));
       }
 
       _controllerName.clear();
@@ -70,6 +69,10 @@ class _ViewFormState extends State<ViewForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Permohonan Tempahan"),
+        centerTitle: true,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -110,19 +113,34 @@ class _ViewFormState extends State<ViewForm> {
                   onPressed: onSubmit, child: Text("Hantar/Submit")),
             ),
             Container(
-              padding: EdgeInsets.all(20),
-              width: 400,
-              height: 200,
-              child: ListView.builder(
-                itemCount: listpermohonan.length,
-                itemBuilder: (context, int index) {
-                return Text(
-                  listpermohonan[index].toString() + 
-                  listpermohonan[index].nama +
-                  listpermohonan[index].alamat
-                );
-              }),
-            )
+                padding: EdgeInsets.all(20),
+                width: 400,
+                height: 200,
+                child: DataTable(
+                  columns: [
+                    DataColumn(label: Text("Nama")),
+                    DataColumn(label: Text("NoKP")),
+                    DataColumn(label: Text("Phone")),
+                    DataColumn(label: Text("Alamat"))
+                  ],
+                  rows: listpermohonan.map((list) {
+                    return DataRow(cells: [
+                      DataCell(Text(list.nama)),
+                      DataCell(Text(list.noKP.toString())),
+                      DataCell(Text(list.noPhone.toString())),
+                      DataCell(Text(list.alamat)),
+                    ]);
+                  }).toList(),
+                )
+                // ListView.builder(
+                //   itemCount: listpermohonan.length,
+                //   itemBuilder: (context, int index) {
+                //   return Text(
+                //     listpermohonan[index].nama +
+                //     listpermohonan[index].alamat
+                //   );
+                // }),
+                )
           ],
         ),
       ),
