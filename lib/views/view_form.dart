@@ -19,9 +19,14 @@ class _ViewFormState extends State<ViewForm> {
   final TextEditingController _controllerNoKP = TextEditingController();
   final TextEditingController _controllerAlamat = TextEditingController();
 
+  // Dropdown options
+  final List<String> listStatus = ['Requesting', 'Pending', 'On Review', 'Approved'];
+
   String labelName = "";
   int labelPhone = 0;
   List<PermohonanModel> listpermohonan = [];
+    // Form controllers
+  String? selectedstatus ;
 
   /// Fungsi untuk gantikan nama dari nilai TextField
   void onSubmit() {
@@ -51,7 +56,9 @@ class _ViewFormState extends State<ViewForm> {
             nama: _controllerName.text,
             noKP: int.parse(_controllerNoKP.text),
             alamat: _controllerAlamat.text,
-            noPhone: int.parse(_controllerPhone.text)));
+            noPhone: int.parse(_controllerPhone.text),
+            status: selectedstatus!
+        ));
       }
 
       _controllerName.clear();
@@ -107,7 +114,20 @@ class _ViewFormState extends State<ViewForm> {
                   TextField(
                     decoration: InputDecoration(hintText: "Enter Alamat"),
                     controller: _controllerAlamat,
-                  )
+                  ),
+                  DropdownButtonFormField<String>(
+                    value: selectedstatus,
+                    hint: Text('Select Name'),
+                    items: listStatus.map((name) {
+                      return DropdownMenuItem(value: name, child: Text(name));
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedstatus = value;
+                      });
+                    },
+                  ),
+
                 ],
               ),
             ),
@@ -120,21 +140,26 @@ class _ViewFormState extends State<ViewForm> {
                 padding: EdgeInsets.all(20),
                 width: 400,
                 height: 200,
-                child: DataTable(
-                  columns: [
-                    DataColumn(label: Text("Nama")),
-                    DataColumn(label: Text("NoKP")),
-                    DataColumn(label: Text("Phone")),
-                    DataColumn(label: Text("Alamat"))
-                  ],
-                  rows: listpermohonan.map((list) {
-                    return DataRow(cells: [
-                      DataCell(Text(list.nama)),
-                      DataCell(Text(list.noKP.toString())),
-                      DataCell(Text(list.noPhone.toString())),
-                      DataCell(Text(list.alamat)),
-                    ]);
-                  }).toList(),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    columns: [
+                      DataColumn(label: Text("Nama")),
+                      DataColumn(label: Text("NoKP")),
+                      DataColumn(label: Text("Phone")),
+                      DataColumn(label: Text("Alamat")),
+                      DataColumn(label: Text("Jawatan"))
+                    ],
+                    rows: listpermohonan.map((list) {
+                      return DataRow(cells: [
+                        DataCell(Text(list.nama)),
+                        DataCell(Text(list.noKP.toString())),
+                        DataCell(Text(list.noPhone.toString())),
+                        DataCell(Text(list.alamat)),
+                        DataCell(Text(list.status)),
+                      ]);
+                    }).toList(),
+                  ),
                 )
                 // ListView.builder(
                 //   itemCount: listpermohonan.length,
